@@ -10,12 +10,12 @@
 
 <h4>An open-source interoperability tool designed to extend local client-side configurations and improve the UX of the Wand application.</h4>
 
-**🚨 IMPORTANT NOTICE: THIS PROJECT HAS NO OFFICIAL YOUTUBE TUTORIALS, GUIDES, OR PREBUILT EXECUTABLE DOWNLOADS. 🚨
-There are no official videos showing how to install or use this tool. Scammers are creating fake tutorials using this project's name and placing malware/password stealers in the video descriptions. Official GitHub releases contain release notes only, not `.exe` files. If you downloaded an `.exe` or archive from a YouTube link, a random website, or a third-party mirror, you did not get it from this project. We are not responsible for third-party downloads.**
+**🚨 IMPORTANT NOTICE: THIS PROJECT HAS NO OFFICIAL YOUTUBE TUTORIALS OR GUIDES. 🚨
+There are no official videos showing how to install or use this tool. Scammers are creating fake tutorials using this project's name and placing malware/password stealers in the video descriptions. The only official prebuilt executable is attached to a [GitHub Release on this repository](../../releases) — `Glitxhhh/Wand-Enhancer`, the community continuation of the original `k1tbyte/Wand-Enhancer` (currently inactive upstream). If you downloaded an `.exe` or archive from a YouTube link, a random website, or a third-party mirror, you did not get it from this project. We are not responsible for third-party downloads. The binary is unsigned (see below) — Windows or your antivirus may warn on first run; that alone is not a sign of tampering, but always get it from this repository's own Releases page, never a link someone else sends you.**
 
 ## 👾 What does it access?
 
-The default .NET patcher modifies files in the selected local Wand installation and contains no update-checking or telemetry network code. Wand itself remains an online application, build tools restore declared dependencies, and the optional Remote Web Panel deliberately starts a LAN HTTP/WebSocket server and uses Wand API/CDN data. An explicit build-time option can include GitHub release notifications; that variant sends a GitHub API request with your IP and a User-Agent when Wand starts, but sends no Wand or account data and never downloads updates. Review the source and build the executable from your own fork; unsigned patching tools can trigger generic antivirus heuristics.
+The default .NET patcher modifies files in the selected local Wand installation and contains no update-checking or telemetry network code. Wand itself remains an online application, build tools restore declared dependencies, and the optional Remote Web Panel deliberately starts a LAN HTTP/WebSocket server and uses Wand API/CDN data. An explicit build-time option can include GitHub release notifications; that variant sends a GitHub API request with your IP and a User-Agent when Wand starts, but sends no Wand or account data and never downloads updates. Review the source before running the binary from either path below; unsigned patching tools can trigger generic antivirus heuristics.
 
 ## 💫 What features are improved?
 
@@ -41,7 +41,16 @@ WandEnhancer includes a built-in **Remote Web Panel** allowing you to control ap
 
 ## 👀 How to use?
 
-This repository does not publish official compiled binaries. Build your own executable from your own fork using GitHub Actions.
+### Option A: download the prebuilt release
+
+Grab the latest `WandEnhancer.exe` from this repository's **[Releases](../../releases)** page and run it. This is the fastest path, but note:
+
+- The binary is **unsigned**. Windows SmartScreen or your antivirus may flag it on first run — that's expected for an unsigned tool that patches another application, not necessarily a sign anything's wrong. If you'd rather not run an unsigned binary at all, use Option B below and build it yourself from source.
+- Only trust `.exe` files attached directly to a Release on **this** repository. A download from anywhere else — a YouTube description, a random site, a Discord link — did not come from this project.
+
+### Option B: build it yourself
+
+Build your own executable from your own fork using GitHub Actions. This also lets you read every line that goes into the binary before you run it.
 
 1. Sign in to GitHub and fork this repository.
 2. Use **Sync fork** before each build so your fork contains the latest fixes.
