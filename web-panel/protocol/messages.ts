@@ -190,6 +190,8 @@ export type HelloMessage = MessageEnvelope<
     {
         client: 'mobile-web';
         clientVersion: string;
+        /** Proves this device scanned the bridge's QR/pairing link. Empty when never paired. */
+        pairingToken: string;
         capabilities: {
             supportsDeltaValues: boolean;
             supportsTrainerSwitch: boolean;

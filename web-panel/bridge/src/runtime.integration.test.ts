@@ -28,7 +28,7 @@ describe('production bridge runtime', () => {
 
         try {
             await waitUntil(() => runtime.listening);
-            const messages = await connectAndCollect(port, 4);
+            const messages = await connectAndCollect(port, 4, runtime.pairingToken);
             expect(messages.map((message) => message.type)).toEqual([
                 'hello_ack',
                 'trainer_meta',
@@ -119,7 +119,11 @@ async function getFreePort(): Promise<number> {
     });
 }
 
-async function connectAndCollect(port: number, count: number): Promise<any[]> {
+async function connectAndCollect(
+    port: number,
+    count: number,
+    pairingToken: string,
+): Promise<any[]> {
     return await new Promise((resolve, reject) => {
         const messages: any[] = [];
         const socket = new NodeWebSocket(`ws://127.0.0.1:${port}/remote/ws`);
@@ -133,6 +137,7 @@ async function connectAndCollect(port: number, count: number): Promise<any[]> {
                     payload: {
                         client: 'mobile-web',
                         clientVersion: 'test',
+                        pairingToken,
                         capabilities: { supportsDeltaValues: true, supportsTrainerSwitch: true },
                     },
                 }),

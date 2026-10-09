@@ -9,5 +9,6 @@
     "basePath": "/remote/",
     "assetsPath": "/remote/assets/",
     "webSocketPath": "/remote/ws",
-    "healthPath": "/remote/api/health"
+    "healthPath": "/remote/api/health",
+    "pairingTokenQueryParam": "token"
 }

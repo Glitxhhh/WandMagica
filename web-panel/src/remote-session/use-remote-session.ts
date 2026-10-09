@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
 import type { CheatSchema, InstalledAppSummary } from '../../protocol/messages';
 import { normalizeCheatValue } from '../trainer/model/values';
 import { RemoteSessionClient } from './remote-session.client';
+import { readInitialPairingToken } from './remote-session.urls';
 import { protocolAction } from './remote-session.protocol';
 import {
     createInitialRemoteSessionState,
@@ -28,6 +29,7 @@ export function useRemoteSession() {
     // True if user disconnected intentionally; prevents auto-reconnect on refocus.
     const userDisconnectedRef = useRef(false);
     const connectRef = useRef<() => void>(() => {});
+    const pairingTokenRef = useRef(readInitialPairingToken());
     useEffect(() => {
         stateRef.current = state;
     }, [state]);
@@ -70,7 +72,7 @@ export function useRemoteSession() {
             return;
         }
 
-        const client = new RemoteSessionClient(wsUrl, {
+        const client = new RemoteSessionClient(wsUrl, pairingTokenRef.current, {
             onConnecting: () =>
                 dispatch({
                     type: 'connecting',

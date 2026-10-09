@@ -1,3 +1,4 @@
+const crypto = require('node:crypto');
 const http = require('node:http');
 const path = require('node:path');
 
@@ -7,6 +8,7 @@ const {
     DEFAULT_REMOTE_HOST,
     DEFAULT_REMOTE_PORT,
     DEV_SERVER_PORTS,
+    PAIRING_TOKEN_QUERY_PARAM,
     PORT_SCAN_RANGE,
     REMOTE_BASE_PATH,
     REMOTE_HEALTH_PATH,
@@ -40,6 +42,7 @@ const HTTP_NOT_FOUND = 404;
 const WS_CLOSE_NORMAL = 1000;
 const WS_CLOSE_PROTOCOL_ERROR = 1002;
 const WS_CLOSE_UNSUPPORTED = 1003;
+const WS_CLOSE_POLICY_VIOLATION = 1008;
 const WS_CLOSE_TOO_LARGE = 1009;
 
 declare global {
@@ -77,6 +80,9 @@ function createBridgeServer(options: BridgeOptions = {}) {
     const panelRoot = options.panelRoot || path.dirname(__dirname);
     const clients = new Set<BridgeClient>();
     const log = createBridgeLogger(options);
+    // Regenerated every bridge start: a fresh QR/link is required to pair again, which
+    // also doubles as implicit revocation of anyone who paired against a prior run.
+    const pairingToken = crypto.randomBytes(9).toString('base64url');
     let advertisedUrls: string[] = [];
     let setValueHandler: SetValueHandler | null = null;
     let commandHandler: CommandHandler | null = null;
@@ -94,10 +100,16 @@ function createBridgeServer(options: BridgeOptions = {}) {
 
     function setAdvertisedPort(nextPort: number) {
         port = nextPort;
-        advertisedUrls = getAdvertisedUrls(port);
+        advertisedUrls = getAdvertisedUrls(port).map(appendPairingToken);
         globalThis.__wandRemoteBridgeUrl =
             advertisedUrls.find((entry: string) => !entry.includes('localhost')) ||
             advertisedUrls[0];
+    }
+
+    function appendPairingToken(url: string): string {
+        const parsed = new URL(url);
+        parsed.searchParams.set(PAIRING_TOKEN_QUERY_PARAM, pairingToken);
+        return parsed.toString();
     }
 
     function setHandler(handler: SetValueHandler | null) {
@@ -302,6 +314,21 @@ function createBridgeServer(options: BridgeOptions = {}) {
         }
 
         if (message?.type === 'hello') {
+            if (safeString(message.payload?.pairingToken) !== pairingToken) {
+                sendJson(
+                    client,
+                    'error',
+                    {
+                        code: 'pairing_required',
+                        message:
+                            'This device is not paired. Scan the QR code shown in Wand to pair, then reconnect.',
+                    },
+                    message.requestId ?? null,
+                );
+                closeClient(client, WS_CLOSE_POLICY_VIOLATION, 'Pairing required.');
+                return;
+            }
+
             client.handshaken = true;
             sendJson(
                 client,
@@ -482,6 +509,7 @@ function createBridgeServer(options: BridgeOptions = {}) {
         'info',
         `Bridge starting (pid=${process.pid}, panelRoot=${panelRoot}, preferredPort=${port}, host=${host})`,
     );
+    log('info', `Pairing token: ${pairingToken} (embedded in advertised URLs automatically).`);
     globalThis.__wandRemoteBridgeLogFile = log.file;
 
     const server = http.createServer(handleRequest);
@@ -515,6 +543,9 @@ function createBridgeServer(options: BridgeOptions = {}) {
         },
         get remoteUrl() {
             return globalThis.__wandRemoteBridgeUrl;
+        },
+        get pairingToken() {
+            return pairingToken;
         },
         close() {
             for (const client of clients) {

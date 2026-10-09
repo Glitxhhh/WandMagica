@@ -7,6 +7,7 @@ import type {
 } from '../../protocol/messages';
 import type { BridgeClient, LogFn, ServerInfo } from './types';
 
+const { PAIRING_TOKEN_QUERY_PARAM } = require('./constants');
 const {
     gameStatusSignature,
     installedAppsSignature,
@@ -41,6 +42,20 @@ const { sendJson } = require('./websocket-codec') as {
         requestId?: string | number | null,
     ) => void;
 };
+
+function stripPairingToken(url: string | null): string | null {
+    if (!url) {
+        return url;
+    }
+
+    try {
+        const parsed = new URL(url);
+        parsed.searchParams.delete(PAIRING_TOKEN_QUERY_PARAM);
+        return parsed.toString();
+    } catch {
+        return url;
+    }
+}
 
 type BridgeStateSnapshot = { trainerMeta: TrainerMetaPayload; trainerValues: TrainerValuesPayload };
 
@@ -177,8 +192,10 @@ function createBridgeState({ clients, log, getServerInfo }: BridgeStateOptions) 
             gameSessionEvent: currentGameStatus?.session?.event || 'snapshot',
             runningTrainerId: currentGameStatus?.trainer?.trainerId || null,
             installedAppsCount: currentInstalledApps?.apps?.length ?? 0,
-            remoteUrl: serverInfo.remoteUrl,
-            advertisedUrls: serverInfo.advertisedUrls,
+            // This endpoint is unauthenticated, so the pairing token each URL carries is
+            // stripped before it goes out - otherwise anyone who can reach /health learns it.
+            remoteUrl: stripPairingToken(serverInfo.remoteUrl),
+            advertisedUrls: serverInfo.advertisedUrls.map(stripPairingToken),
         };
     }
 

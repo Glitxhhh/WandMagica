@@ -25,6 +25,7 @@ export class RemoteSessionClient {
 
     constructor(
         private readonly url: string,
+        private readonly pairingToken: string,
         private readonly handlers: SocketHandlers,
     ) {}
 
@@ -110,6 +111,7 @@ export class RemoteSessionClient {
             payload: {
                 client: 'mobile-web',
                 clientVersion: WEB_CONTRACT.clientVersion,
+                pairingToken: this.pairingToken,
                 capabilities: { supportsDeltaValues: true, supportsTrainerSwitch: true },
             },
         };

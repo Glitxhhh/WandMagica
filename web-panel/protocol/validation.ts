@@ -95,6 +95,7 @@ export function isOutgoingMessage(value: unknown): value is OutgoingMessage {
         return (
             payload.client === 'mobile-web' &&
             hasString(payload, 'clientVersion') &&
+            hasString(payload, 'pairingToken') &&
             isRecord(payload.capabilities)
         );
     }
