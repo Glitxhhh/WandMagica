@@ -3,13 +3,14 @@ description: Create a report to help us improve
 title: '[Bug]: '
 labels: ["bug"]
 assignees:
-  - k1tbyte
+  - Glitxhhh
 body:
   - type: markdown
     attributes:
       value: |
-        **STOP BEFORE YOU POST: THIS PROJECT DOES NOT PUBLISH OFFICIAL EXECUTABLE DOWNLOADS.**
-        Build WandEnhancer yourself from your own fork or local source. If you downloaded an executable from YouTube, Discord, a mirror, or any other third-party website, treat it as untrusted. Do not open issues about third-party binaries or stolen accounts here - this project is not related to those downloads.
+        This is the issue tracker for the [Glitxhhh/Wand-Enhancer](https://github.com/Glitxhhh/Wand-Enhancer) community continuation, not the original [k1tbyte/Wand-Enhancer](https://github.com/k1tbyte/Wand-Enhancer).
+
+        **STOP BEFORE YOU POST: the only official executable is attached to a [Release on this repository](https://github.com/Glitxhhh/Wand-Enhancer/releases).** If you downloaded an executable from YouTube, Discord, a mirror, or any other third-party website, treat it as untrusted. Do not open issues about third-party binaries or stolen accounts here - this project is not related to those downloads.
 
   - type: checkboxes
     id: build_source_check
@@ -17,7 +18,7 @@ body:
       label: Build Source Confirmation (REQUIRED)
       description: You must check this box to proceed.
       options:
-        - label: I confirm that I built WandEnhancer myself from my own fork or local source, and did not download an executable from YouTube, Discord, mirrors, issue comments, or any other third-party website.
+        - label: I confirm that I got WandEnhancer from a Release on this repository or built it myself from my own fork/local source, and did not download an executable from YouTube, Discord, mirrors, issue comments, or any other third-party website.
           required: true
 
   - type: input
@@ -40,8 +41,8 @@ body:
     id: build_commit
     attributes:
       label: Build branch and commit
-      description: Copy the branch and source commit SHA from your Actions run or launcher.log. A version number alone cannot distinguish RC builds. No upstream pull request is needed to build your fork.
-      placeholder: "feature/rc_v_2.0.0.0, commit abc1234"
+      description: If you used a Release binary, say which tag (for example, 2.2.0.0). If you built it yourself, copy the branch and source commit SHA from your Actions run or launcher.log - a version number alone cannot distinguish RC builds.
+      placeholder: "2.2.0.0, or feature/rc_v_2.0.0.0 commit abc1234"
     validations:
       required: true
 

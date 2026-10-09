@@ -1,1 +1,8 @@
 blank_issues_enabled: false
+contact_links:
+  - name: Questions & general discussion
+    url: https://github.com/Glitxhhh/Wand-Enhancer/discussions
+    about: Not a bug or a concrete feature request? Ask here instead.
+  - name: Original project (k1tbyte/Wand-Enhancer)
+    url: https://github.com/k1tbyte/Wand-Enhancer/issues
+    about: This fork is a community continuation. For something specific to the original repository, go there instead.

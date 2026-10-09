@@ -1,0 +1,39 @@
+name: Feature request
+description: Suggest an idea or improvement for the continuation fork
+title: '[Feature]: '
+labels: ["enhancement"]
+assignees:
+  - Glitxhhh
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is the issue tracker for the [Glitxhhh/Wand-Enhancer](https://github.com/Glitxhhh/Wand-Enhancer) community continuation, not the original [k1tbyte/Wand-Enhancer](https://github.com/k1tbyte/Wand-Enhancer). Feature requests and bug reports are both welcome here while upstream is quiet.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: What are you trying to do that the tool doesn't support today, or doesn't support well?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: What would you want to happen? Sketch the behavior, UI, or patch you have in mind if you have one.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Any other ways to solve this you've thought of, or workarounds you're using now.
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional context
+      description: Screenshots, links, related issues, or anything else that helps explain the request.
