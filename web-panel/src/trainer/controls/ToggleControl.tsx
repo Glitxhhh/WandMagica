@@ -1,10 +1,14 @@
+import { triggerHaptic } from '@/shared/haptics';
 import { cn } from '@/shared/lib/ui';
 
 import type { ControlInternalProps } from './shared';
 
 export const ToggleControl = ({ value, disabled, onChange }: ControlInternalProps) => {
     const checked = Boolean(value);
-    const handleClick = () => onChange(!checked);
+    const handleClick = () => {
+        triggerHaptic(30);
+        onChange(!checked);
+    };
 
     return (
         <button

@@ -126,6 +126,8 @@ export function useRemotePanel() {
             addPreset: presets.addPreset,
             applyPreset,
             deletePreset: presets.deletePreset,
+            exportPresets: presets.exportPresets,
+            importPresets: presets.importPresets,
         },
         library: {
             games: libraryGames,

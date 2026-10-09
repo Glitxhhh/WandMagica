@@ -61,6 +61,8 @@ export const App = () => {
                                         onApplyPreset={trainer.applyPreset}
                                         onDeletePreset={trainer.deletePreset}
                                         onPanic={trainer.panic}
+                                        onExportPresets={trainer.exportPresets}
+                                        onImportPresets={trainer.importPresets}
                                     />
                                     <div className="sticky top-0 z-10 -mx-3.5 mb-2.5 px-3.5 py-0.5">
                                         <SearchInput

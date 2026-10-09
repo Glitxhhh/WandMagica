@@ -13,6 +13,7 @@ export type IconName =
     | 'chevron-left'
     | 'chevron-right'
     | 'dot'
+    | 'download'
     | 'flame'
     | 'gamepad'
     | 'gamepad-variant-outline'
@@ -36,6 +37,7 @@ export type IconName =
     | 'star-filled'
     | 'stop'
     | 'swords'
+    | 'upload'
     | 'user'
     | 'world'
     | 'x';
@@ -98,6 +100,13 @@ const ICON_PATHS: Record<IconName, ReactNode> = {
     'chevron-left': <path d="m15 6-6 6 6 6" />,
     'chevron-right': <path d="m9 6 6 6-6 6" />,
     dot: <circle cx="12" cy="12" r="4" fill="currentColor" stroke="none" />,
+    download: (
+        <>
+            <path d="M12 3v12" />
+            <path d="m7 10 5 5 5-5" />
+            <path d="M5 19h14" />
+        </>
+    ),
     flame: (
         <path d="M12 22c4 0 7-3 7-7 0-3-2-5-5-8 0 3-2 4-4 5 0-3-1-5-3-7 0 5-3 7-3 10 0 4 3 7 8 7z" />
     ),
@@ -228,6 +237,13 @@ const ICON_PATHS: Record<IconName, ReactNode> = {
             <path d="M10 6 4 0" />
             <path d="m10 6-4 4" />
             <path d="M20 20 10 10" />
+        </>
+    ),
+    upload: (
+        <>
+            <path d="M12 21V9" />
+            <path d="m7 14 5-5 5 5" />
+            <path d="M5 19h14" />
         </>
     ),
     user: (

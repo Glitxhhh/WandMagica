@@ -39,6 +39,62 @@ export function savePresets(storageKey: string, presets: RemotePreset[]): boolea
     return saveJson(storageKey, presets, (value) => Array.isArray(value) && value.length === 0);
 }
 
+export function exportPresetsJson(storageKey: string): string {
+    return JSON.stringify(loadPresets(storageKey), null, 2);
+}
+
+export type ImportPresetsResult = {
+    /** Entries that parsed as a valid preset and were added. */
+    imported: number;
+    /** Entries that didn't look like a preset (wrong shape, no name) and were dropped. */
+    skipped: number;
+    presets: RemotePreset[];
+};
+
+/**
+ * Merges presets from a previously exported JSON array into storage. An imported preset whose
+ * id collides with an existing one gets a fresh id rather than being silently dropped - presets
+ * exported from two different devices can otherwise share an id with unrelated content.
+ */
+export function importPresetsJson(storageKey: string, jsonString: string): ImportPresetsResult {
+    const existing = loadPresets(storageKey);
+
+    let parsed: unknown;
+    try {
+        parsed = JSON.parse(jsonString);
+    } catch {
+        return { imported: 0, skipped: 0, presets: existing };
+    }
+
+    if (!Array.isArray(parsed)) {
+        return { imported: 0, skipped: 0, presets: existing };
+    }
+
+    const existingIds = new Set(existing.map((preset) => preset.id));
+    const merged = [...existing];
+    let imported = 0;
+    let skipped = 0;
+
+    for (const entry of parsed) {
+        const preset = normalizePreset(entry);
+        if (!preset) {
+            skipped++;
+            continue;
+        }
+
+        const resolved = existingIds.has(preset.id) ? { ...preset, id: createPresetId() } : preset;
+        existingIds.add(resolved.id);
+        merged.push(resolved);
+        imported++;
+    }
+
+    if (imported > 0) {
+        savePresets(storageKey, merged);
+    }
+
+    return { imported, skipped, presets: merged };
+}
+
 export function createPreset(name: string, values: Record<string, unknown>): RemotePreset {
     return {
         id: createPresetId(),

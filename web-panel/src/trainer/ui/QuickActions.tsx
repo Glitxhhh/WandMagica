@@ -1,7 +1,7 @@
 import { msg } from '@lingui/core/macro';
 import { useLingui } from '@lingui/react';
 import { Trans } from '@lingui/react/macro';
-import { type FormEvent, useEffect, useRef, useState } from 'react';
+import { type ChangeEvent, type FormEvent, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { cn } from '@/shared/lib/ui';
 import { Icon } from '@/shared/ui/Icon';
@@ -15,6 +15,8 @@ type QuickActionsProps = {
     onAddPreset: (name: string) => boolean;
     onApplyPreset: (preset: RemotePreset) => void;
     onDeletePreset: (presetId: string) => void;
+    onExportPresets: () => void;
+    onImportPresets: (file: File) => void;
 };
 
 export const QuickActions = ({
@@ -23,10 +25,13 @@ export const QuickActions = ({
     onAddPreset,
     onApplyPreset,
     onDeletePreset,
+    onExportPresets,
+    onImportPresets,
 }: QuickActionsProps) => {
     const { _ } = useLingui();
     const [modalOpen, setModalOpen] = useState(false);
     const [draftName, setDraftName] = useState('');
+    const importInputRef = useRef<HTMLInputElement | null>(null);
 
     const handleOpenModal = () => {
         setDraftName('');
@@ -45,9 +50,20 @@ export const QuickActions = ({
         return true;
     };
 
+    const handleImportClick = () => importInputRef.current?.click();
+
+    const handleImportFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        // Reset so picking the same file again still fires a change event.
+        event.target.value = '';
+        if (file) {
+            onImportPresets(file);
+        }
+    };
+
     return (
         <>
-            <div className="remote-scrollbar-hidden mb-3 flex gap-1.5 overflow-x-auto pb-0.5">
+            <div className="remote-scrollbar-hidden mb-3 flex items-center gap-1.5 overflow-x-auto pb-0.5">
                 <Chip icon="bolt" label={_(msg`Panic Off`)} variant="danger" onClick={onPanic} />
                 {presets.map((preset) => (
                     <PresetChip
@@ -58,6 +74,27 @@ export const QuickActions = ({
                     />
                 ))}
                 <Chip icon="plus" label={_(msg`Add`)} variant="add" onClick={handleOpenModal} />
+                <IconButton
+                    shrink
+                    size="sm"
+                    icon="download"
+                    label={_(msg`Export presets`)}
+                    onClick={onExportPresets}
+                />
+                <IconButton
+                    shrink
+                    size="sm"
+                    icon="upload"
+                    label={_(msg`Import presets`)}
+                    onClick={handleImportClick}
+                />
+                <input
+                    ref={importInputRef}
+                    type="file"
+                    accept="application/json"
+                    className="hidden"
+                    onChange={handleImportFileChange}
+                />
             </div>
             {modalOpen
                 ? createPortal(
