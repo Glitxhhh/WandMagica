@@ -174,7 +174,7 @@ If you find this fork useful, you can support its development using any of the o
 [![BTC](https://img.shields.io/badge/BTC-donate-f7931a.svg?logo=bitcoin)](https://www.blockchain.com/explorer/addresses/btc/bc1qnwtms7pp8hdfqnuunvs3juwskgu7tartd532pz)
 [![ETH](https://img.shields.io/badge/ETH-donate-3c3c3d.svg?logo=ethereum)](https://etherscan.io/address/0x48240481C69904C35EC41B4f4eBE41Af05D81975)
 [![SOL](https://img.shields.io/badge/SOL-donate-9945ff.svg?logo=solana)](https://explorer.solana.com/address/8gLiGa61utSAyqRGy4QtoVzP6BNkL3GjQZZBpuRtY8hK)
-[![TRX](https://img.shields.io/badge/TRX-donate-ff060a.svg)](https://tronscan.org/#/address/TDgQTrr4i3ivJQtQpYB5M3nEw92VkAmC6D)
+[![USDT TRC20](https://img.shields.io/badge/USDT--TRC20-donate-26a17b.svg?logo=tether)](https://tronscan.org/#/address/TDgQTrr4i3ivJQtQpYB5M3nEw92VkAmC6D)
 
 <details>
 <summary>Crypto addresses (click to expand)</summary>
@@ -184,9 +184,9 @@ If you find this fork useful, you can support its development using any of the o
 | Bitcoin | `bc1qnwtms7pp8hdfqnuunvs3juwskgu7tartd532pz` |
 | Ethereum | `0x48240481C69904C35EC41B4f4eBE41Af05D81975` |
 | Solana | `8gLiGa61utSAyqRGy4QtoVzP6BNkL3GjQZZBpuRtY8hK` |
-| Tron | `TDgQTrr4i3ivJQtQpYB5M3nEw92VkAmC6D` |
+| Tron (USDT-TRC20) | `TDgQTrr4i3ivJQtQpYB5M3nEw92VkAmC6D` |
 
-The Ethereum address above is the same wallet on Linea, Base, BNB Chain, Polygon, Optimism, Arbitrum, and Arc - just double-check your wallet is set to the network you mean to send on before confirming.
+The Ethereum address above is the same wallet on Linea, Base, BNB Chain, Polygon, Optimism, Arbitrum, and Arc - just double-check your wallet is set to the network you mean to send on before confirming. The Tron address works for native TRX too, not just USDT-TRC20 - that's just what the badge is labeled for.
 
 USDC isn't its own chain - send it as a token on whichever of the networks above you already use (Ethereum, the other EVM chains, or Solana), there's no separate USDC address.
 
