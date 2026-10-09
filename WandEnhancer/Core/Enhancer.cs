@@ -115,7 +115,7 @@ namespace WandEnhancer.Core
             else
             {
                 _logger("[ENHANCER] Backup found, restoring pristine app.asar before patching...", ELogType.Info);
-                AsarSharp.Utils.Extensions.CopyOver(_backupPath, _asarPath);
+                FileRetry.Run(() => AsarSharp.Utils.Extensions.CopyOver(_backupPath, _asarPath));
             }
 
             if (!Directory.Exists(_unpackedBackupPath) && Directory.Exists(_unpackedPath))
@@ -126,12 +126,15 @@ namespace WandEnhancer.Core
             else if (Directory.Exists(_unpackedBackupPath))
             {
                 _logger("[ENHANCER] Restoring pristine app.asar.unpacked before patching...", ELogType.Info);
-                if (Directory.Exists(_unpackedPath))
+                FileRetry.Run(() =>
                 {
-                    Directory.Delete(_unpackedPath, true);
-                }
+                    if (Directory.Exists(_unpackedPath))
+                    {
+                        Directory.Delete(_unpackedPath, true);
+                    }
 
-                AsarSharp.Utils.Extensions.CopyDirectory(_unpackedBackupPath, _unpackedPath);
+                    AsarSharp.Utils.Extensions.CopyDirectory(_unpackedBackupPath, _unpackedPath);
+                });
             }
             else if (!Directory.Exists(_unpackedPath))
             {
@@ -323,14 +326,17 @@ namespace WandEnhancer.Core
             }
 
             ProcessTerminator.TryKillProcess(_weModConfig.BrandName);
-            AsarSharp.Utils.Extensions.CopyOver(_backupPath, _asarPath);
-
-            if (Directory.Exists(_unpackedPath))
+            FileRetry.Run(() =>
             {
-                Directory.Delete(_unpackedPath, true);
-            }
+                AsarSharp.Utils.Extensions.CopyOver(_backupPath, _asarPath);
 
-            AsarSharp.Utils.Extensions.CopyDirectory(_unpackedBackupPath, _unpackedPath);
+                if (Directory.Exists(_unpackedPath))
+                {
+                    Directory.Delete(_unpackedPath, true);
+                }
+
+                AsarSharp.Utils.Extensions.CopyDirectory(_unpackedBackupPath, _unpackedPath);
+            });
 
             // Clean up legacy proxy DLL
             var proxyDllPath = Path.Combine(_weModConfig.RootDirectory, ProxyDllFileName);

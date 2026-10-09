@@ -114,8 +114,28 @@ namespace WandEnhancer.View.MainWindow
             UseInstall(info);
         }
 
+        /// <summary>
+        /// Runs <paramref name="runWork"/> directly if Wand isn't running. Otherwise asks for
+        /// explicit confirmation before force-closing it - Patch/Restore force-close Wand
+        /// themselves once invoked, but used to do so unconditionally with no way to decline.
+        /// </summary>
+        private void RunRequiringWandClosed(Func<Task> runWork)
+        {
+            if (!ProcessTerminator.IsRunning(WeModInfo.BrandName))
+            {
+                _ = runWork();
+                return;
+            }
+
+            _shell.OpenPopup(new CloseWandConfirmPopup(WeModInfo.BrandName, () =>
+            {
+                _shell.ClosePopup();
+                _ = runWork();
+            }), LocalizationManager.Get("cwc_popup_title"));
+        }
+
         // Runs off the UI thread due to heavy file IO.
-        private async void OnBackupRestoring(object param)
+        private void OnBackupRestoring(object param)
         {
             if (WeModInfo == null)
             {
@@ -123,28 +143,31 @@ namespace WandEnhancer.View.MainWindow
                 return;
             }
 
-            IsBusy = true;
-            bool restored = await Task.Run(() =>
+            RunRequiringWandClosed(async () =>
             {
-                try
+                IsBusy = true;
+                bool restored = await Task.Run(() =>
                 {
-                    new Enhancer(WeModInfo, Log).Restore();
-                    return true;
-                }
-                catch (Exception e)
+                    try
+                    {
+                        new Enhancer(WeModInfo, Log).Restore();
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        Log(LocalizationManager.Format("log_restore_failed", e.Message), ELogType.Error);
+                        return false;
+                    }
+                });
+
+                IsBusy = false;
+                if (restored)
                 {
-                    Log(LocalizationManager.Format("log_restore_failed", e.Message), ELogType.Error);
-                    return false;
+                    AlreadyPatched = false;
+                    CanRestore = false;
+                    IsPatchEnabled = true;
                 }
             });
-
-            IsBusy = false;
-            if (restored)
-            {
-                AlreadyPatched = false;
-                CanRestore = false;
-                IsPatchEnabled = true;
-            }
         }
 
         private void OnPatching(object param)
@@ -155,26 +178,29 @@ namespace WandEnhancer.View.MainWindow
                 return;
             }
 
-            _shell.OpenPopup(new PatchVectorsPopup(async config =>
+            _shell.OpenPopup(new PatchVectorsPopup(config =>
             {
                 _shell.ClosePopup();
-                IsPatchEnabled = false;
-                IsBusy = true;
-                await Task.Run(() =>
+                RunRequiringWandClosed(async () =>
                 {
-                    try
+                    IsPatchEnabled = false;
+                    IsBusy = true;
+                    await Task.Run(() =>
                     {
-                        new Enhancer(WeModInfo, Log, config).Patch();
-                        AlreadyPatched = true;
-                        CanRestore = true;
-                    }
-                    catch (Exception e)
-                    {
-                        Log(LocalizationManager.Format("log_patch_failed", e.Message), ELogType.Error);
-                        IsPatchEnabled = true;
-                    }
+                        try
+                        {
+                            new Enhancer(WeModInfo, Log, config).Patch();
+                            AlreadyPatched = true;
+                            CanRestore = true;
+                        }
+                        catch (Exception e)
+                        {
+                            Log(LocalizationManager.Format("log_patch_failed", e.Message), ELogType.Error);
+                            IsPatchEnabled = true;
+                        }
+                    });
+                    IsBusy = false;
                 });
-                IsBusy = false;
             }), LocalizationManager.Get("pv_popup_title"));
         }
 

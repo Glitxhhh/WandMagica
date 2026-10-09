@@ -59,6 +59,13 @@
     <s:String x:Key="pv_strategy_hint">Static edits Wand on disk, which breaks its digital signature. Supervised patches in memory at every launch - it can trip antivirus and may not work in every setup.</s:String>
     <!--#endregion -->
 
+    <!--#region CloseWandConfirmPopup -->
+    <s:String x:Key="cwc_popup_title">Wand is running</s:String>
+    <s:String x:Key="cwc_message">{0} needs to be closed before continuing.</s:String>
+    <s:String x:Key="cwc_hint">Any unsaved state in Wand, or in a game it modified, will be lost. Close the game first if one is running.</s:String>
+    <s:String x:Key="cwc_confirm">Force close Wand</s:String>
+    <!--#endregion -->
+
     <!--#region Runtime log -->
     <s:String x:Key="log_install_found">WeMod directory found at {0} ({1})</s:String>
     <s:String x:Key="log_already_patched">WeMod already patched. If you want to patch again, please restore the backup first.</s:String>

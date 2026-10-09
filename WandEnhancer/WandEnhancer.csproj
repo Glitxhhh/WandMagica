@@ -116,6 +116,7 @@
         <Compile Include="ReactiveUICore\ObservableObject.cs" />
         <Compile Include="ReactiveUICore\RelayCommand.cs" />
         <Compile Include="Utils\ProcessTerminator.cs" />
+        <Compile Include="Utils\FileRetry.cs" />
         <Compile Include="Utils\WeModInstalls.cs" />
         <Compile Include="View\Controls\PopupHost.xaml.cs">
           <DependentUpon>PopupHost.xaml</DependentUpon>
@@ -127,6 +128,9 @@
         <Compile Include="View\MainWindow\MainWindowVm.cs" />
         <Compile Include="View\Popups\PatchVectorsPopup.xaml.cs">
           <DependentUpon>PatchVectorsPopup.xaml</DependentUpon>
+        </Compile>
+        <Compile Include="View\Popups\CloseWandConfirmPopup.xaml.cs">
+          <DependentUpon>CloseWandConfirmPopup.xaml</DependentUpon>
         </Compile>
         <Compile Include="View\Popups\SettingsPopup.xaml.cs">
           <DependentUpon>SettingsPopup.xaml</DependentUpon>
@@ -153,6 +157,7 @@
         <Page Include="View\Controls\PopupHost.xaml" />
         <Page Include="View\MainWindow\MainWindow.xaml" />
         <Page Include="View\Popups\PatchVectorsPopup.xaml" />
+        <Page Include="View\Popups\CloseWandConfirmPopup.xaml" />
         <Page Include="View\Popups\UpdatePopup.xaml" Condition="'$(EnableUpdateNotifications)' == 'true'" />
         <Page Include="View\Popups\SettingsPopup.xaml" />
     </ItemGroup>
