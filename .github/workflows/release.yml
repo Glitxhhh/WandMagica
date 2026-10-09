@@ -7,7 +7,11 @@ on:
 
 jobs:
   publish-release:
-    if: github.repository == 'k1tbyte/Wand-Enhancer'
+    # Scoped the same way upstream scopes its own release job: to one canonical
+    # repository, so a tag pushed on an unrelated downstream fork doesn't
+    # unexpectedly publish a release there too. Update this to your own
+    # "<owner>/<repo>" if you fork this fork and want releases of your own.
+    if: github.repository == 'Glitxhhh/Wand-Enhancer'
     runs-on: windows-latest
     permissions:
       contents: write
@@ -48,7 +52,12 @@ jobs:
           name: ${{ github.ref_name }}
           tag_name: ${{ github.ref_name }}
           body_path: release-notes.md
-          files: CHANGELOG.md
+          # The binary is unsigned: it may trip SmartScreen/AV on first run, same
+          # as before it was dropped from releases. Built fresh per tag by this
+          # workflow, from source, not reused from a prior run.
+          files: |
+            WandEnhancer/bin/Release/WandEnhancer.exe
+            CHANGELOG.md
           fail_on_unmatched_files: true
           # RC tags must not replace the latest stable release.
           prerelease: ${{ contains(github.ref_name, '-') }}
