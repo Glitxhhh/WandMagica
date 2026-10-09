@@ -72,7 +72,9 @@ Build your own executable from your own fork using GitHub Actions. This also let
 
 https://github.com/user-attachments/assets/7966cabe-0aa6-424d-8c2f-981ad91e0f91
 
+### Found a bug, or want a feature?
 
+Open an issue using the **[Bug report](../../issues/new?template=bug_report.yml)** or **[Feature request](../../issues/new?template=feature_request.yml)** template. For anything else — a question, an idea you want to talk through first — use **[Discussions](../../discussions)** instead.
 
 ## 🧩 Custom scripts
 
@@ -137,14 +139,12 @@ Update notifications are excluded by default. To compile them in locally, run `b
 
 ## ❓ Q&A
 
-- **Why is there no `.exe` in GitHub Releases?**
-  - Official releases are notes-only on purpose. The project no longer distributes prebuilt executables because unsigned or self-built patching tools are repeatedly reuploaded, mislabeled, and flagged by third-party scanners. Build the executable from your own fork using GitHub Actions instead.
 - **Where do I download the executable?**
-  - From your own fork's **Actions** artifact after running the **Build executable** workflow. Do not download `.exe` files from YouTube descriptions, random mirrors, Discord attachments, or issue comments.
+  - From this repository's own **[Releases](../../releases)** page (Option A above), or from your own fork's **Actions** artifact after running the **Build executable** workflow (Option B). Do not download `.exe` files from YouTube descriptions, random mirrors, Discord attachments, or issue comments.
 - **Why does Windows Defender or SmartScreen warn about my build?**
-  - The GitHub Actions artifact is unsigned and uncommon, so Windows may warn even when the code was built directly from your fork. Review the source, verify the workflow logs, and only run binaries you built yourself.
+  - It's unsigned, whether it's the Release binary or your own Actions artifact - uncommon enough that Windows may warn regardless. Review the source and verify the Release's or your own fork's workflow logs rather than taking the warning as proof of tampering.
 - **Can I use a binary built by someone else?**
-  - You can, but you should treat it as untrusted. This repository cannot verify or support third-party builds.
+  - A Release published on this repository was built by this repository's own `Release` workflow, from the exact source at that tag - the run logs are public, so you can verify what went into it. A binary from anywhere else (a different fork, a YouTube link, a Discord attachment) should be treated as untrusted; this repository cannot verify or support those.
 - **Does this send data anywhere?**
   - The default .NET patcher is fully offline. The optional Remote Web Panel listens on your LAN and may request trainer translations/artwork through Wand's existing API/CDN paths. If you explicitly compile in update notifications, each Wand launch checks GitHub's public releases API and exposes only the normal request metadata, including your IP and User-Agent. There is no telemetry, download, or automatic update.
 - **How do I learn about a new version without an in-app update check?**
@@ -165,12 +165,12 @@ This project is licensed under the Apache-2.0 - see the [LICENSE](LICENSE.md) fi
 
 ## ❤️ Support
 
-If you find this project useful, you can support its development using any of the options below 🙌
+This is the community continuation fork - these links support its maintenance, not the original project's.
 
-[![Patreon](https://img.shields.io/badge/Patreon-donate-f96854.svg?logo=patreon)](https://www.patreon.com/kitbyte/gift)
-[![USDT TRC20](https://img.shields.io/badge/USDT--TRC20-donate-26a17b.svg?logo=tether)](https://tronscan.org/#/address/TQdvau8pAy5Tg1Aa588tTcPCFgbcHtuoxc)
-[![BTC](https://img.shields.io/badge/BTC-donate-f7931a.svg?logo=bitcoin)](https://www.blockchain.com/explorer/addresses/btc/1EZKDcyU8REm9JW5xwXJqSpn5Xaq5yAWWX)
-[![ETH](https://img.shields.io/badge/ETH-donate-3c3c3d.svg?logo=ethereum)](https://etherscan.io/address/0xd904d9d0557f88bbb1c4ab3582b4ca0d8a730e8d)
+If you find this fork useful, you can support its development using any of the options below 🙌
+
+[![Patreon](https://img.shields.io/badge/Patreon-donate-f96854.svg?logo=patreon)](https://patreon.bifrosthub.ru/)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-donate-ff5e5b.svg?logo=ko-fi)](https://ko-fi.com/glitxh)
 
 
 ---
