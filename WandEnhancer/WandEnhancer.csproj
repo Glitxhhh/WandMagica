@@ -151,6 +151,7 @@
         <Page Include="Locale\lang.uk-UA.xaml" />
         <Page Include="Locale\lang.ja-JP.xaml" />
         <Page Include="Locale\lang.tr-TR.xaml" />
+        <Page Include="Locale\lang.ar-SA.xaml" />
         <Page Include="Style\ColorScheme.xaml" />
         <Page Include="Style\Icons.xaml" />
         <Page Include="Style\Styles.xaml" />
