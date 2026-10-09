@@ -3,6 +3,13 @@
 This file is the source of truth for release notes.
 The newest entry must match the version in `WandEnhancer/Properties/AssemblyInfo.cs`.
 
+## [2.2.0.0] - 2026-10-09
+
+### Fixes
+
+- Fixed mods failing to inject on Wand 12.61 and 12.62 (`client_integrity_failed`). `WandAuxiliaryService.exe` gained three independent integrity checks that run before any privileged command, including DLL injection for both the TrainerLib and tophat trainer backends: an `Authenticode`/`WinVerifyTrust` re-check, a re-check of the Electron ASAR-integrity fuse the patcher clears so a patched `app.asar` will load, and a comparison of `app.asar`'s real SHA256 against a value baked into `Wand.exe`'s own build-time PE resource - stale the moment the archive is patched. All three are now defeated: the first two with narrow, structurally-anchored stubs inside the auxiliary service, the third by recomputing and rewriting the real hash in place.
+- Fixed *Auto-apply after updates* never actually triggering. It worked by replacing the root Squirrel launcher stub so the patcher's own code would run on the next launch and re-apply the saved patch - but Squirrel rewrites that exact file as part of applying an update itself, before the next launch, so the redirection was always gone by the time anything could run again. Replaced with a small background watcher that watches the install root directly and re-applies the saved patch the moment a new version folder appears and finishes writing, independent of launch timing.
+
 ## [2.1.0.0] - 2026-09-09
 
 ### Features
