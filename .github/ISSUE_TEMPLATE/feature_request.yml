@@ -8,7 +8,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        This is the issue tracker for the [Glitxhhh/Wand-Enhancer](https://github.com/Glitxhhh/Wand-Enhancer) community continuation, not the original [k1tbyte/Wand-Enhancer](https://github.com/k1tbyte/Wand-Enhancer). Feature requests and bug reports are both welcome here while upstream is quiet.
+        This is the issue tracker for [WandMagica](https://github.com/Glitxhhh/WandMagica), the community continuation of [k1tbyte/Wand-Enhancer](https://github.com/k1tbyte/Wand-Enhancer). Feature requests and bug reports are both welcome here while upstream is quiet.
 
   - type: textarea
     id: problem

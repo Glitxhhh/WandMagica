@@ -11,7 +11,7 @@ jobs:
     # repository, so a tag pushed on an unrelated downstream fork doesn't
     # unexpectedly publish a release there too. Update this to your own
     # "<owner>/<repo>" if you fork this fork and want releases of your own.
-    if: github.repository == 'Glitxhhh/Wand-Enhancer'
+    if: github.repository == 'Glitxhhh/WandMagica'
     runs-on: windows-latest
     permissions:
       contents: write

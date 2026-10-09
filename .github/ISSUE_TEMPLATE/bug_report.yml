@@ -8,9 +8,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        This is the issue tracker for the [Glitxhhh/Wand-Enhancer](https://github.com/Glitxhhh/Wand-Enhancer) community continuation, not the original [k1tbyte/Wand-Enhancer](https://github.com/k1tbyte/Wand-Enhancer).
+        This is the issue tracker for [WandMagica](https://github.com/Glitxhhh/WandMagica), the community continuation of [k1tbyte/Wand-Enhancer](https://github.com/k1tbyte/Wand-Enhancer).
 
-        **STOP BEFORE YOU POST: the only official executable is attached to a [Release on this repository](https://github.com/Glitxhhh/Wand-Enhancer/releases).** If you downloaded an executable from YouTube, Discord, a mirror, or any other third-party website, treat it as untrusted. Do not open issues about third-party binaries or stolen accounts here - this project is not related to those downloads.
+        **STOP BEFORE YOU POST: the only official executable is attached to a [Release on this repository](https://github.com/Glitxhhh/WandMagica/releases).** If you downloaded an executable from YouTube, Discord, a mirror, or any other third-party website, treat it as untrusted. Do not open issues about third-party binaries or stolen accounts here - this project is not related to those downloads.
 
   - type: checkboxes
     id: build_source_check
