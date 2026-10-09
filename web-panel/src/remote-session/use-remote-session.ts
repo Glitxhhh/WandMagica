@@ -3,7 +3,6 @@ import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
 import type { CheatSchema, InstalledAppSummary } from '../../protocol/messages';
 import { normalizeCheatValue } from '../trainer/model/values';
 import { RemoteSessionClient } from './remote-session.client';
-import { readInitialPairingToken } from './remote-session.urls';
 import { protocolAction } from './remote-session.protocol';
 import {
     createInitialRemoteSessionState,
@@ -11,6 +10,7 @@ import {
     type RemoteSessionState,
     remoteSessionReducer,
 } from './remote-session.reducer';
+import { readInitialPairingToken } from './remote-session.urls';
 import { selectIsConnected, selectPendingTargets } from './selectors';
 
 const RECONNECT_BASE_DELAY_MS = 2000;
