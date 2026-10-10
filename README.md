@@ -2,16 +2,20 @@
 
 ![logo](./assets/icon.svg)
 
-# WandEnhancer
+# WandMagica
 
-[![GitLab Mirror](https://img.shields.io/badge/GitLab-mirror-fc6d26?logo=gitlab)](https://gitlab.com/kitbyte/wand-enhancer)
+### A community continuation of WandEnhancer
+
+[![GitLab Mirror (upstream)](https://img.shields.io/badge/GitLab-upstream%20mirror-fc6d26?logo=gitlab)](https://gitlab.com/kitbyte/wand-enhancer)
 
 </div>
 
 <h4>An open-source interoperability tool designed to extend local client-side configurations and improve the UX of the Wand application.</h4>
 
+**WandMagica is the community continuation of [k1tbyte/Wand-Enhancer](https://github.com/k1tbyte/Wand-Enhancer), picking up bug fixes and features while upstream has been inactive since 2026-09-09.** It's the same tool, under new maintenance on this repository: the binary is still called `WandEnhancer.exe`, and this README calls the tool itself "WandEnhancer" throughout, since that's what it is. "WandMagica" is this fork's name for the project hosting it. Upstream [PR #318](https://github.com/k1tbyte/Wand-Enhancer/pull/318) carries this fork's original fix back to k1tbyte's repository and remains open; this fork may continue independently even if it's merged.
+
 **🚨 IMPORTANT NOTICE: THIS PROJECT HAS NO OFFICIAL YOUTUBE TUTORIALS OR GUIDES. 🚨
-There are no official videos showing how to install or use this tool. Scammers are creating fake tutorials using this project's name and placing malware/password stealers in the video descriptions. The only official prebuilt executable is attached to a [GitHub Release on this repository](../../releases) — `Glitxhhh/WandMagica`, the community continuation of the original `k1tbyte/Wand-Enhancer` (currently inactive upstream). If you downloaded an `.exe` or archive from a YouTube link, a random website, or a third-party mirror, you did not get it from this project. We are not responsible for third-party downloads. The binary is unsigned (see below) — Windows or your antivirus may warn on first run; that alone is not a sign of tampering, but always get it from this repository's own Releases page, never a link someone else sends you.**
+There are no official videos showing how to install or use this tool. Scammers are creating fake tutorials using this project's name and placing malware/password stealers in the video descriptions. The only official prebuilt executable is attached to a [GitHub Release on this repository](../../releases), `Glitxhhh/WandMagica`. If you downloaded an `.exe` or archive from a YouTube link, a random website, or a third-party mirror, you did not get it from this project. We are not responsible for third-party downloads. The binary is unsigned (see below) and Windows or your antivirus may warn on first run; that alone is not a sign of tampering, but always get it from this repository's own Releases page, never a link someone else sends you.**
 
 ## 👾 What does it access?
 
@@ -45,8 +49,8 @@ WandEnhancer includes a built-in **Remote Web Panel** allowing you to control ap
 
 Grab the latest `WandEnhancer.exe` from this repository's **[Releases](../../releases)** page and run it. This is the fastest path, but note:
 
-- The binary is **unsigned**. Windows SmartScreen or your antivirus may flag it on first run — that's expected for an unsigned tool that patches another application, not necessarily a sign anything's wrong. If you'd rather not run an unsigned binary at all, use Option B below and build it yourself from source.
-- Only trust `.exe` files attached directly to a Release on **this** repository. A download from anywhere else — a YouTube description, a random site, a Discord link — did not come from this project.
+- The binary is **unsigned**. Windows SmartScreen or your antivirus may flag it on first run, which is expected for an unsigned tool that patches another application, not necessarily a sign anything's wrong. If you'd rather not run an unsigned binary at all, use Option B below and build it yourself from source.
+- Only trust `.exe` files attached directly to a Release on **this** repository. A download from anywhere else (a YouTube description, a random site, a Discord link) did not come from this project.
 
 ### Option B: build it yourself
 
@@ -74,7 +78,7 @@ https://github.com/user-attachments/assets/7966cabe-0aa6-424d-8c2f-981ad91e0f91
 
 ### Found a bug, or want a feature?
 
-Open an issue using the **[Bug report](../../issues/new?template=bug_report.yml)** or **[Feature request](../../issues/new?template=feature_request.yml)** template. For anything else — a question, an idea you want to talk through first — use **[Discussions](../../discussions)** instead.
+Open an issue using the **[Bug report](../../issues/new?template=bug_report.yml)** or **[Feature request](../../issues/new?template=feature_request.yml)** template. For anything else (a question, an idea you want to talk through first) use **[Discussions](../../discussions)** instead.
 
 ## 🧩 Custom scripts
 
@@ -85,7 +89,7 @@ You can inject your own JavaScript into Wand at patch time to tweak or fix thing
 - In the patch dialog, add one or more `.js` files (only existing `.js` files are accepted), **or**
 - Drop `.js` files into a `renderer-scripts/` folder placed next to the patcher executable.
 
-Then patch as usual — your scripts are bundled into the client and run inside Wand's window.
+Then patch as usual. Your scripts are bundled into the client and run inside Wand's window.
 
 **How it runs**
 
@@ -97,7 +101,7 @@ Then patch as usual — your scripts are bundled into the client and run inside 
 **Minimal example** (`hello.js`)
 
 ```js
-// Injected scripts can run multiple times — guard one-time setup.
+// Injected scripts can run multiple times. Guard one-time setup.
 if (!globalThis.__helloScriptInstalled) {
   globalThis.__helloScriptInstalled = true;
 
